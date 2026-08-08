@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Gear — PC & Peripheral Recommendations | CanIPlay</title>
+<meta name="description" content="Recommended GPUs, CPUs and gaming peripherals for the best gaming experience.">
+<link rel="stylesheet" href="assets/style.css?v=1786204126">
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="index.html" class="tab">Can I Play</a>
+    <a href="game-gear.html" class="tab active">Game Gear</a>
+    <a href="top-games.html" class="tab">Top Games</a>
+    <a href="game-news.html" class="tab">Game News</a>
+    <a href="game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+
+<header class="hero small"><h1>Game Gear</h1>
+  <p>Search any GPU / CPU to see specs, value & where to buy. 🛒 links support the site.</p>
+  
+  <div class="search-box">
+    <div class="combo-wrap">
+      <input id="game-input" type="text" placeholder="Search a game (e.g. GTA V)..." autocomplete="off">
+      <div class="combo-list" id="game-combo"></div>
+    </div>
+    <div class="combo-wrap">
+      <input id="gpu-input" type="text" placeholder="GPU (e.g. RTX 3060)" autocomplete="off" data-type="gpu">
+      <div class="combo-list" id="gpu-combo"></div>
+    </div>
+    <div class="combo-wrap">
+      <input id="cpu-input" type="text" placeholder="CPU (e.g. i5-12400F)" autocomplete="off" data-type="cpu">
+      <div class="combo-list" id="cpu-combo"></div>
+    </div>
+    <select id="ram-select" title="RAM">
+      <option value="8">8 GB RAM</option>
+      <option value="16" selected>16 GB RAM</option>
+      <option value="32">32 GB RAM</option>
+      <option value="64">64 GB RAM</option>
+      <option value="4">4 GB RAM</option>
+    </select>
+    <button id="check-btn">Check</button>
+  </div>
+  <div id="gear-result" class="gear-result"></div>
+</header>
+<section class="content-list">
+  <h2>🖥️ Top GPUs</h2>
+  <a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+5090&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 5090</span><span class="row-genres">38,978 G3D · $47 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+4090&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 4090</span><span class="row-genres">38,039 G3D · $34 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+5080&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 5080</span><span class="row-genres">35,623 G3D · $14 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+4080&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 4080</span><span class="row-genres">34,437 G3D · $14 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+4080+SUPER&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 4080 SUPER</span><span class="row-genres">34,221 G3D · $16 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=RTX+PRO+4500+Blackwell&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">RTX PRO 4500 Blackwell</span><span class="row-genres">33,359 G3D · $31 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+5070+Ti&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 5070 Ti</span><span class="row-genres">32,347 G3D · $11 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=GeForce+RTX+4070+Ti+SUPER&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">GeForce RTX 4070 Ti SUPER</span><span class="row-genres">31,828 G3D · $14 · 🛒</span></a>
+  <h2>🧠 Top CPUs</h2>
+  <a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9755&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9755</span><span class="row-genres">166,328 CPU Mark · $130 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9965&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9965</span><span class="row-genres">160,542 CPU Mark · $148 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9655P&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9655P</span><span class="row-genres">160,490 CPU Mark · $108 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9B45&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9B45</span><span class="row-genres">158,790 CPU Mark · $136 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9655&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9655</span><span class="row-genres">156,110 CPU Mark · $119 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9845&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9845</span><span class="row-genres">152,985 CPU Mark · $136 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+Ryzen+Threadripper+PRO+9985WX&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD Ryzen Threadripper PRO 9985WX</span><span class="row-genres">150,071 CPU Mark · $80 · 🛒</span></a><a class="game-row" href="https://www.amazon.com/s?k=AMD+EPYC+9575F&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">AMD EPYC 9575F</span><span class="row-genres">147,998 CPU Mark · $77 · 🛒</span></a>
+  <h2>🖱️ Gaming Peripherals</h2>
+  <a class="game-row" href="https://www.amazon.com/s?k=gaming+monitor&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">Gaming Monitors</span><span class="row-genres">144Hz+ 🛒</span></a>
+  <a class="game-row" href="https://www.amazon.com/s?k=mechanical+gaming+keyboard&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">Mechanical Keyboards</span><span class="row-genres">🛒</span></a>
+  <a class="game-row" href="https://www.amazon.com/s?k=gaming+mouse&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">Gaming Mice</span><span class="row-genres">🛒</span></a>
+  <a class="game-row" href="https://www.amazon.com/s?k=gaming+headset&tag=caniplay0b-20" target="_blank" rel="sponsored noopener"><span class="row-name">Gaming Headsets</span><span class="row-genres">🛒</span></a>
+</section>
+<footer class="footer">
+  <p>CanIPlay — game compatibility checker. Hardware data: PassMark. Game data: Steam.</p>
+  <p><a href="index.html">Home</a> · <a href="game-sales.html">Deals &amp; Free Games</a></p>
+</footer>
+<script src="assets/app.js?v=1786204126"></script>
+</body>
+</html>

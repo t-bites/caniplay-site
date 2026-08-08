@@ -1,0 +1,307 @@
+/* CanIPlay — dark gaming theme */
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --card: #1c2333;
+  --border: #2d333b;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #4f8cff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.5; }
+a { color: var(--accent); text-decoration: none; }
+
+.nav { display: flex; align-items: center; gap: 12px; padding: 14px 24px; background: var(--bg2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.logo { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+.tagline { color: var(--muted); font-size: .85rem; }
+
+.hero { text-align: center; padding: 48px 20px 36px; background: radial-gradient(ellipse at top, #1a2a4a 0%, var(--bg) 70%); }
+.hero h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); margin-bottom: 8px; }
+.hero p { color: var(--muted); margin-bottom: 24px; }
+
+/* 首页数据统计条 */
+.hero-stats { display: flex; gap: 28px; justify-content: center; margin-top: 26px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.stat b { font-size: 1.5rem; color: var(--accent); }
+.stat span { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+/* 游戏卡片年份徽标 */
+.game-info { position: relative; padding: 10px 12px; }
+.year-badge { position: absolute; top: -10px; right: 10px; background: var(--accent); color: #fff; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+.search-box { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 860px; margin: 0 auto; }
+.search-box input, .search-box select { padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--text); font-size: 1rem; }
+.search-box input:focus, .search-box select:focus { outline: none; border-color: var(--accent); }
+.search-box button { padding: 12px 28px; border-radius: 8px; border: none; background: var(--accent); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; }
+.search-box button:hover { filter: brightness(1.15); }
+
+/* 可搜索下拉 */
+.combo-wrap { position: relative; flex: 1; min-width: 200px; }
+.combo-list { position: absolute; top: 100%; left: 0; right: 0; z-index: 50; background: var(--bg2); border: 1px solid var(--border); border-radius: 0 0 8px 8px; max-height: 260px; overflow-y: auto; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+.combo-item { padding: 9px 14px; cursor: pointer; font-size: .88rem; border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.combo-item:hover { background: var(--card); color: var(--accent); }
+#ram-select { min-width: 130px; }
+
+#suggestions { max-width: 720px; margin: 8px auto 0; text-align: left; }
+.sugg { padding: 8px 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; margin-top: 4px; cursor: pointer; font-size: .9rem; }
+.sugg:hover { border-color: var(--accent); }
+
+.games { max-width: 1200px; margin: 32px auto; padding: 0 20px; }
+.games h2, .content-list h2 { margin-bottom: 16px; font-size: 1.3rem; }
+.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.game-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: transform .15s, border-color .15s; }
+.game-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.game-card img { width: 100%; aspect-ratio: 460/215; object-fit: cover; display: block; }
+.game-info { padding: 10px 12px; }
+.game-info h3 { font-size: .95rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.genres { color: var(--muted); font-size: .78rem; }
+
+.deals-banner { max-width: 1200px; margin: 40px auto; padding: 24px; background: linear-gradient(90deg, #2d1b4e, #1c2333); border: 1px solid var(--border); border-radius: 12px; }
+.deals-banner h2 { margin-bottom: 6px; }
+.deals-banner p { color: var(--muted); }
+
+/* Game page */
+.game-page { max-width: 1000px; margin: 0 auto; padding: 24px 20px; }
+.game-head { display: flex; gap: 20px; align-items: center; margin-bottom: 28px; flex-wrap: wrap; }
+.game-cover { width: 100%; max-width: 460px; border-radius: 10px; border: 1px solid var(--border); }
+.game-head h1 { font-size: 1.8rem; }
+.date { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+
+.check-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+.check-panel h2 { margin-bottom: 12px; }
+#verdict { margin-top: 16px; font-size: 1.05rem; }
+.verdict-box { padding: 16px; border-radius: 8px; border: 1px solid; }
+.verdict-great, .verdict-ok { background: rgba(63,185,80,.1); border-color: var(--green); }
+.verdict-weak { background: rgba(210,153,34,.1); border-color: var(--yellow); }
+.verdict-no { background: rgba(248,81,73,.1); border-color: var(--red); }
+.verdict-detail { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+
+/* 判定分数条（GPU/CPU/RAM vs recommended） */
+.gauge-box { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gauge-row { display: flex; align-items: center; gap: 10px; font-size: .82rem; }
+.gauge-label { width: 40px; color: var(--muted); font-weight: 700; }
+.gauge-track { flex: 1; height: 8px; background: rgba(255,255,255,.08); border-radius: 5px; overflow: hidden; }
+.gauge-fill { height: 100%; border-radius: 5px; transition: width .4s ease; }
+.g-fill-great { background: linear-gradient(90deg, var(--green), #56d364); }
+.g-fill-ok { background: linear-gradient(90deg, #d29922, #e3b341); }
+.g-fill-no { background: linear-gradient(90deg, var(--red), #ff7b72); }
+.gauge-val { width: 120px; text-align: right; color: var(--muted); white-space: nowrap; }
+
+.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+@media (max-width: 700px) { .specs { grid-template-columns: 1fr; } }
+.spec-col { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.spec-col h3 { margin-bottom: 12px; font-size: 1.05rem; }
+.spec-col table { width: 100%; border-collapse: collapse; }
+.spec-col td { padding: 7px 4px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: .88rem; }
+.spec-col td:first-child { color: var(--muted); width: 90px; white-space: nowrap; }
+
+.upgrade { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.upgrade h3 { margin-bottom: 8px; }
+.upgrade p { color: var(--muted); font-size: .9rem; }
+
+.content-list { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.content-list li { margin: 8px 0; color: var(--muted); }
+
+/* All games page */
+.hero.small { padding: 32px 20px 24px; }
+.game-list { display: flex; flex-direction: column; gap: 8px; }
+.game-row { display: flex; align-items: center; gap: 14px; padding: 8px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; transition: border-color .15s; }
+.game-row:hover { border-color: var(--accent); }
+.game-row img { width: 120px; border-radius: 5px; }
+.row-name { font-weight: 600; flex: 1; }
+.row-genres { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+
+/* 媒体区（视频+截图）*/
+.media-section { margin-bottom: 20px; }
+.media-section h3 { margin-bottom: 10px; font-size: 1.05rem; }
+.media-section video { width: 100%; max-width: 720px; border-radius: 10px; background: #000; }
+.ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.ss-grid img { width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+.conf-note { color: var(--yellow); font-size: .82rem; margin-top: 10px; }
+.news-list { list-style: none; padding: 0; }
+.news-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: .88rem; }
+.news-list a { color: var(--fg); text-decoration: none; }
+.news-list a:hover { color: var(--accent); }
+.company, .franchise { color: var(--muted); font-size: .86rem; margin: 3px 0; }
+
+/* 平台徽章（跨平台标记）*/
+.platform-badges { display: inline-flex; gap: 5px; vertical-align: middle; margin-left: 6px; }
+.platform-badge { font-size: .68rem; font-weight: 600; padding: 2px 8px; border-radius: 10px;
+  background: rgba(102, 126, 234, .15); color: #a5b4fc; border: 1px solid rgba(102, 126, 234, .3); }
+.pb-steam { background: rgba(27, 88, 156, .2); color: #66c0f4; border-color: rgba(27, 88, 156, .35); }
+.pb-epic { background: rgba(40, 40, 40, .4); color: #d9d9d9; border-color: rgba(255,255,255,.15); }
+.pb-playstation { background: rgba(0, 112, 235, .15); color: #6db9ff; border-color: rgba(0,112,235,.3); }
+.pb-xbox { background: rgba(16, 124, 16, .2); color: #7ed957; border-color: rgba(16,124,16,.35); }
+.pb-switch { background: rgba(230, 0, 18, .15); color: #ff6b76; border-color: rgba(230,0,18,.3); }
+
+/* ===== 移动端响应式 ===== */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  /* 两层导航：上层 logo，下层 tab 横滑 */
+  .nav { flex-wrap: nowrap; padding: 0; gap: 0; flex-direction: column; align-items: stretch; }
+  .nav .logo { padding: 10px 14px 6px; font-size: 1.05rem; white-space: nowrap; }
+  .nav-tabs { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    gap: 4px; scrollbar-width: none; padding: 0 10px 8px; }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tabs .tab { white-space: nowrap; font-size: .8rem; padding: 6px 12px; flex-shrink: 0; }
+  .hero { padding: 24px 16px; }
+  .hero h1 { font-size: 1.6rem; }
+  .search-box { flex-direction: column; gap: 6px; }
+  .search-box input, .search-box select { min-width: 100%; font-size: 16px; } /* 防 iOS 缩放 */
+  .combo-list { max-height: 200px; }
+  .filter-bar { flex-wrap: wrap; gap: 6px; }
+  .filter-bar select { flex: 1 1 45%; min-width: 0; font-size: .85rem; }
+  .game-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .game-card h3 { font-size: .8rem; }
+  .game-page { padding: 12px; }
+  .rank-tab-bar { overflow-x: auto; display: flex; gap: 4px; }
+  .rank-tab-btn { flex-shrink: 0; }
+  .content-list { padding: 16px 12px; }
+  .footer { font-size: .72rem; padding: 20px 12px; }
+}
+
+@media (max-width: 420px) {
+  .game-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .nav-tabs .tab { font-size: .74rem; padding: 5px 8px; }
+  .ss-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 5 Tab 导航：Tab 行独立横向滚动（Title 固定不随 Tab 滑动） */
+.nav { display: flex; align-items: center; gap: 16px; padding: 12px 20px;
+  background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+.nav .logo { font-weight: 700; font-size: 1.1rem; text-decoration: none; flex-shrink: 0; }
+.nav-tabs { display: flex; gap: 6px; overflow-x: auto; flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none; flex: 1; }
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tabs .tab { padding: 7px 14px; border-radius: 18px; font-size: .86rem; color: var(--muted);
+  text-decoration: none; transition: .2s; flex-shrink: 0; white-space: nowrap; }
+.nav-tabs .tab:hover { color: var(--fg); background: rgba(255,255,255,.06); }
+.nav-tabs .tab.active { color: #fff; background: var(--accent); }
+
+/* 筛选栏 */
+.filter-bar { display: flex; gap: 8px; justify-content: center; align-items: center;
+  margin: 14px auto 0; max-width: 860px; flex-wrap: wrap; }
+.filter-bar select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--fg); font-size: .88rem; }
+.f-check { display: inline-flex; align-items: center; gap: 5px; font-size: .85rem; color: var(--muted); }
+.f-clear { padding: 7px 14px; border-radius: 18px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; font-size: .82rem; }
+.f-clear:hover { color: var(--fg); }
+.result-count { color: var(--muted); font-size: .8rem; margin: 10px auto 0; text-align: center; }
+.load-more { display: block; margin: 4px auto 34px; padding: 10px 26px; border-radius: 20px;
+  border: 1px solid var(--accent); background: transparent; color: var(--accent);
+  cursor: pointer; font-size: .88rem; }
+.load-more:hover { background: var(--accent); color: #fff; }
+
+/* 排行榜 Tab */
+.rank-tab-bar { display: flex; gap: 6px; margin: 10px 0; flex-wrap: wrap; }
+.rank-tab-btn { padding: 6px 14px; border-radius: 16px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; font-size: .8rem; }
+.rank-tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.rank-tab-panel { display: none; }
+.rank-tab-panel.active { display: block; }
+
+/* 促销徽章 */
+.sale-badge { font-size: .68rem; font-weight: 700; padding: 1px 7px; border-radius: 8px; margin-left: 4px; }
+.sale-big { background: #ef4444; color: #fff; }
+.sale-mid { background: #f97316; color: #fff; }
+.sale-small { background: #3b82f6; color: #fff; }
+.price-line { display: block; padding: 0 10px 10px; font-size: .78rem; color: var(--muted); }
+.price-line s { color: #6b7280; }
+.price-line b { color: #4ade80; }
+.free-badge { background: #38bdf8; color: #082f49; font-size: .68rem; font-weight: 700;
+  padding: 1px 7px; border-radius: 8px; margin-left: 4px; }
+
+/* 游戏网格（图片卡片） */
+.game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 0 20px 30px; }
+.game-card { display: block; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  background: var(--card); text-decoration: none; transition: .2s; }
+.game-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.game-card img { width: 100%; aspect-ratio: 460/215; object-fit: cover; display: block; }
+.game-card .card-ph { width: 100%; aspect-ratio: 460/215; background: linear-gradient(135deg, #1e2430, #2a3244); }
+.game-card h3 { font-size: .85rem; padding: 8px 10px 2px; color: var(--fg); margin: 0; line-height: 1.3; }
+.game-card .row-genres { padding: 0 10px 10px; display: block; }
+.game-card .row-price { color: var(--accent); font-size: .8rem; padding: 0 10px 10px; display: block; }
+.badge-pending { font-size: .62rem; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; padding: 0 5px; margin-left: 3px; }
+.scroll-loader { text-align: center; color: var(--muted); font-size: .82rem; padding: 14px 0; }
+
+/* 图片容器固定比例（img 失败不塌陷，行内无空洞） */
+.game-card .thumb { width: 100%; aspect-ratio: 460/215; background: linear-gradient(135deg, #1e2430, #2a3244); overflow: hidden; }
+.game-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* PC 大屏：卡片更大、展示更多 */
+@media (min-width: 1024px) {
+  .game-list { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+  .game-card h3 { font-size: .95rem; }
+  .game-card .card-meta { font-size: .8rem; }
+}
+
+/* 首页模块分组：每行固定 6 列（PC）× 2 行整齐填满，无空洞 */
+.modules { max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 26px; }
+.module { border: 1px solid var(--border); border-radius: 14px; padding: 18px; background: var(--card); }
+.module-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.module-head h2 { font-size: 1.15rem; margin: 0; }
+.module-more { color: var(--accent); text-decoration: none; font-size: .85rem; }
+.module-more:hover { text-decoration: underline; }
+.module-desc { color: var(--muted); font-size: .88rem; margin: 0 0 10px; }
+.modules .game-list { padding: 0; grid-template-columns: repeat(6, 1fr); }
+@media (max-width: 768px) {
+  .modules .game-list { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .module { padding: 12px; }
+}
+@media (max-width: 420px) {
+  .modules .game-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+}
+
+.gear-result { max-width: 700px; margin: 12px auto 0; }
+.gear-card { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--accent);
+  border-radius: 10px; background: rgba(102,126,234,.08); flex-wrap: wrap; }
+.gear-card b { font-size: .95rem; }
+.gear-card span { color: var(--muted); font-size: .85rem; }
+.gear-buy { margin-left: auto; padding: 8px 16px; border-radius: 18px; background: var(--accent);
+  color: #fff; text-decoration: none; font-size: .85rem; font-weight: 600; }
+.gear-buy:hover { opacity: .9; }
+
+.footer { text-align: center; padding: 28px 20px; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--border); margin-top: 40px; }
+.footer a { color: var(--muted); text-decoration: underline; }
+
+/* ===== 移动端优化（≤700px） ===== */
+@media (max-width: 700px) {
+  .nav { flex-wrap: wrap; padding: 10px 14px; gap: 6px; }
+  .tagline { display: none; }
+  .nav-links { width: 100%; font-size: .85rem; padding-top: 2px; border-top: 1px solid var(--border); margin-top: 2px; }
+
+  .hero { padding: 30px 14px 24px; }
+  .search-box { flex-direction: column; gap: 8px; max-width: 100%; }
+  .combo-wrap { min-width: 0; width: 100%; flex: none; }
+  .search-box input, .search-box select { width: 100%; font-size: 16px; } /* ≥16px 防 iOS 聚焦缩放 */
+  #ram-select { min-width: 0; }
+  .search-box button { width: 100%; padding: 13px 28px; }
+
+  .hero-stats { gap: 16px; margin-top: 20px; }
+  .stat b { font-size: 1.2rem; }
+
+  .games { padding: 0 14px; }
+  .game-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .game-info h3 { font-size: .85rem; }
+
+  .game-page { padding: 16px 14px; }
+  .game-head { flex-direction: column; align-items: flex-start; }
+  .game-head h1 { font-size: 1.4rem; }
+
+  .specs { grid-template-columns: 1fr; }
+  .gauge-val { width: 84px; font-size: .75rem; }
+
+  .game-row img { width: 80px; }
+  .row-genres { display: none; }
+  .game-row { gap: 10px; padding: 8px; }
+  .row-name { font-size: .9rem; }
+
+  .ss-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .content-list { padding: 16px 14px; }
+  .deals-banner { margin: 24px 14px; padding: 18px; }
+}

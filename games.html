@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Games — CanIPlay Game Compatibility Database</title>
+<meta name="description" content="Search games and check PC compatibility with your hardware.">
+<link rel="stylesheet" href="assets/style.css?v=1786204126">
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="index.html" class="tab active">Can I Play</a>
+    <a href="game-gear.html" class="tab">Game Gear</a>
+    <a href="top-games.html" class="tab">Top Games</a>
+    <a href="game-news.html" class="tab">Game News</a>
+    <a href="game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+
+<header class="hero small">
+  <h1>All Games</h1>
+  <p id="game-total">Loading 5206+ games...</p>
+  <div class="search-box">
+    <input id="game-search" type="text" placeholder="Search 5,206 games (e.g. GTA, Elden Ring, Stardew)...">
+  </div>
+  <p id="result-count" class="result-count"></p>
+  <div class="filter-bar" id="filter-bar">
+    <select id="f-year"><option value="">All Years</option></select>
+    <select id="f-genre"><option value="">All Genres</option></select>
+    <select id="f-sort"><option value="">Newest</option><option value="name">Name A-Z</option><option value="year">Year</option><option value="discount">Biggest Discount</option><option value="price">Lowest Price</option></select>
+    <label class="f-check"><input type="checkbox" id="f-free"> Free</label>
+    <label class="f-check"><input type="checkbox" id="f-sale"> On Sale</label>
+    <button id="f-clear" class="f-clear">✕ Clear</button>
+  </div>
+</header>
+<section class="games full">
+  <div class="game-list" id="game-list"><p class="loading">Loading game database...</p></div>
+  <button id="load-more" class="load-more" style="display:none">Load more</button>
+</section>
+<footer class="footer">
+  <p>CanIPlay — game compatibility checker. Hardware data: PassMark. Game data: Steam.</p>
+  <p><a href="index.html">Home</a> · <a href="deals.html">Deals &amp; Free Games</a></p>
+</footer>
+<script src="assets/app.js?v=1786204126"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CanIPlay — Can I play this game on my PC?</title>
+<meta name="description" content="Check if your PC can run any game — enter your GPU, CPU & RAM for an instant verdict.">
+<link rel="stylesheet" href="assets/style.css?v=1786204126">
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="index.html" class="tab active">Can I Play</a>
+    <a href="game-gear.html" class="tab">Game Gear</a>
+    <a href="top-games.html" class="tab">Top Games</a>
+    <a href="game-news.html" class="tab">Game News</a>
+    <a href="game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+
+<header class="hero">
+  <h1>Can I play this game on my PC?</h1>
+  <p>Enter your GPU &amp; CPU &amp; RAM — get an instant compatibility verdict.</p>
+  
+  <div class="search-box">
+    <div class="combo-wrap">
+      <input id="game-input" type="text" placeholder="Search a game (e.g. GTA V)..." autocomplete="off">
+      <div class="combo-list" id="game-combo"></div>
+    </div>
+    <div class="combo-wrap">
+      <input id="gpu-input" type="text" placeholder="GPU (e.g. RTX 3060)" autocomplete="off" data-type="gpu">
+      <div class="combo-list" id="gpu-combo"></div>
+    </div>
+    <div class="combo-wrap">
+      <input id="cpu-input" type="text" placeholder="CPU (e.g. i5-12400F)" autocomplete="off" data-type="cpu">
+      <div class="combo-list" id="cpu-combo"></div>
+    </div>
+    <select id="ram-select" title="RAM">
+      <option value="8">8 GB RAM</option>
+      <option value="16" selected>16 GB RAM</option>
+      <option value="32">32 GB RAM</option>
+      <option value="64">64 GB RAM</option>
+      <option value="4">4 GB RAM</option>
+    </select>
+    <button id="check-btn">Check</button>
+  </div>
+  <div id="suggestions"></div>
+</header>
+<main class="modules">
+  
+  <div class="module">
+    <div class="module-head"><h2>🔥 Hot Games</h2>
+      <a class="module-more" href="games.html">Browse all games →</a></div>
+    <div class="module-body"><div class="game-list"><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/header.jpg?t=1769535998" loading="lazy" onerror="this.remove()"></div><h3>Dota 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1784564069" loading="lazy" onerror="this.remove()"></div><h3>Counter-Strike 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/a000b4bf98dde5d51cd44206f1ac21d04841017e/header.jpg?t=1785169127" loading="lazy" onerror="this.remove()"></div><h3>Warframe</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/236390/65885881b96806d55fea45e130233fdafd78b129/header.jpg?t=1784211516" loading="lazy" onerror="this.remove()"></div><h3>War Thunder</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg?t=1781536981" loading="lazy" onerror="this.remove()"></div><h3>Rust</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/359550/dbd0c4a94a49fa7a1a2ee3b1426592334c195f88/header_alt_assets_24.jpg?t=1786117431" loading="lazy" onerror="this.remove()"></div><h3>Tom Clancy&#x27;s Rainbow Six Siege</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/381210/header.jpg?t=1784216454" loading="lazy" onerror="this.remove()"></div><h3>Dead by Daylight</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/553850/f11c258b04a5e3e7771c1bab60f324ebf6c6c6fb/header.jpg?t=1779899567" loading="lazy" onerror="this.remove()"></div><h3>HELLDIVERS™ 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/582660/3c4172635738d9e5901e340b28136745fd9e491a/header_alt_assets_27.jpg?t=1785447962" loading="lazy" onerror="this.remove()"></div><h3>Black Desert</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1085660/0ccf0dc0a8c4ec078db7ab99ddc820b2fa884441/header.jpg?t=1781815889" loading="lazy" onerror="this.remove()"></div><h3>Destiny 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/48a2fcbda8565bb45025e98fd8ebde8a7203f6a0/header.jpg?t=1777363040" loading="lazy" onerror="this.remove()"></div><h3>Baldur&#x27;s Gate 3</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/e9047d8ec47ae3d94bb8b464fb0fc9e9972b4ac7/header.jpg?t=1784714077" loading="lazy" onerror="this.remove()"></div><h3>Cyberpunk 2077</h3></a></div></div>
+  </div>
+  
+  <div class="module">
+    <div class="module-head"><h2>🛒 Game Gear</h2>
+      <a class="module-more" href="game-gear.html">View all →</a></div>
+    <div class="module-body"><p class="module-desc">GPU / CPU / peripheral recommendations with the best gaming value.</p><div class="game-list"><a class="game-card" href="game-gear.html"><div class="card-ph"></div><h3>Top GPUs</h3></a><a class="game-card" href="game-gear.html"><div class="card-ph"></div><h3>Top CPUs</h3></a><a class="game-card" href="game-gear.html"><div class="card-ph"></div><h3>Peripherals</h3></a></div></div>
+  </div>
+  
+  <div class="module">
+    <div class="module-head"><h2>🏆 Top Games</h2>
+      <a class="module-more" href="top-games.html">View all →</a></div>
+    <div class="module-body"><p class="module-desc">Weekly charts for US / CN / JP / KR / DE / TW, live players & top-rated.</p><div class="game-list"><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/header.jpg?t=1769535998" loading="lazy" onerror="this.remove()"></div><h3>Dota 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1784564069" loading="lazy" onerror="this.remove()"></div><h3>Counter-Strike 2</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/a000b4bf98dde5d51cd44206f1ac21d04841017e/header.jpg?t=1785169127" loading="lazy" onerror="this.remove()"></div><h3>Warframe</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/236390/65885881b96806d55fea45e130233fdafd78b129/header.jpg?t=1784211516" loading="lazy" onerror="this.remove()"></div><h3>War Thunder</h3></a></div></div>
+  </div>
+  
+  <div class="module">
+    <div class="module-head"><h2>📰 Game News</h2>
+      <a class="module-more" href="game-news.html">View all →</a></div>
+    <div class="module-body"><a class="game-row" href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502823060" target="_blank" rel="noopener"><span class="row-name">[Notice] Maintenance for Online Service</span></a><a class="game-row" href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592785498" target="_blank" rel="noopener"><span class="row-name">[Notice] Maintenance of Online Service</span></a><a class="game-row" href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840310314345973" target="_blank" rel="noopener"><span class="row-name">Update on Our Sequel Development #7</span></a><a class="game-row" href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835871199304162" target="_blank" rel="noopener"><span class="row-name">A NEW WAY TO REPORT BUGS IN UNO™ 🛠️</span></a></div>
+  </div>
+  
+  <div class="module">
+    <div class="module-head"><h2>🎁 Game Sales</h2>
+      <a class="module-more" href="game-sales.html">See all deals →</a></div>
+    <div class="module-body"><div class="game-list"><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/738520/5d14286459f7eaaeb0e5e5f7ad959f03ee724f25/header_alt_assets_1.jpg?t=1786133858" loading="lazy" onerror="this.remove()"></div><h3>Breathedge</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2231380/3e05f31b9aa9fd29b9709f035e73761a908e9fbe/header.jpg?t=1786026109" loading="lazy" onerror="this.remove()"></div><h3>Tom Clancy&#x27;s Ghost Recon® Breakpoint</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/460930/70a2312a82d3ad7ff685302441ea5f12395204a4/header_alt_assets_0.jpg?t=1786116240" loading="lazy" onerror="this.remove()"></div><h3>Tom Clancy&#x27;s Ghost Recon® Wildlands</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1222680/header.jpg?t=1777414224" loading="lazy" onerror="this.remove()"></div><h3>Need for Speed™ Heat</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1846380/eacea0635efb7af9054f6b299060fee32404ace7/header.jpg?t=1777394467" loading="lazy" onerror="this.remove()"></div><h3>Need for Speed™ Unbound</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3424610/c363b355168c4ffeb6d99c7ae0f6baf8b30d8eef/header.jpg?t=1785754501" loading="lazy" onerror="this.remove()"></div><h3>Fantasy Idle Dungeon</h3></a></div></div>
+  </div>
+  
+  <div class="module">
+    <div class="module-head"><h2>⏳ Coming Soon</h2>
+      <a class="module-more" href="games.html">Browse upcoming →</a></div>
+    <div class="module-body"><div class="game-list"><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2456820/31601df18e56ba797acb35b74d9ca7150af38229/header.jpg?t=1786100685" loading="lazy" onerror="this.remove()"></div><h3>Falling Limbs</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3004410/header.jpg?t=1780867384" loading="lazy" onerror="this.remove()"></div><h3>Love in Space</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2687040/header.jpg?t=1762227691" loading="lazy" onerror="this.remove()"></div><h3>9Cat Saga</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2178920/header.jpg?t=1762990366" loading="lazy" onerror="this.remove()"></div><h3>Memories of planet</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1422450/aa249c5e8cc8f90941bd1dbdc311773cd1afe065/header.jpg?t=1769127177" loading="lazy" onerror="this.remove()"></div><h3>Deadlock</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3010850/1abb0c5ef76c14f463dd6e3964adb64f984237d2/header.jpg?t=1785432491" loading="lazy" onerror="this.remove()"></div><h3>Gears of War: E-Day</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3079210/2e52f99e70e827b57a2205469dc5d529e8e0490a/header.jpg?t=1786120175" loading="lazy" onerror="this.remove()"></div><h3>Hell Let Loose: Vietnam</h3></a><a class="game-card" href="#"><div class="thumb"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3940610/7ed2213f0170c1b55410b82ed89a8bab3911c6ea/header.jpg?t=1785170404" loading="lazy" onerror="this.remove()"></div><h3>EA SPORTS™ Madden NFL 27</h3></a></div></div>
+  </div>
+</main>
+<footer class="footer">
+  <p>CanIPlay — game compatibility checker. Hardware data: PassMark. Game data: Steam.</p>
+  <p><a href="index.html">Home</a> · <a href="game-sales.html">Deals &amp; Free Games</a></p>
+</footer>
+<script src="assets/app.js?v=1786204126"></script>
+</body>
+</html>

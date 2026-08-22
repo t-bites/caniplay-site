@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Games — CanIPlay Game Compatibility Database</title>
+<meta name="description" content="Search games and check PC compatibility with your hardware.">
+<link rel="stylesheet" href="assets/style.css?v=1787480000">
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="index.html" class="tab active">Can I Play</a>
+    <a href="game-gear.html" class="tab">Game Gear</a>
+    <a href="top-games.html" class="tab">Top Games</a>
+    <a href="features.html" class="tab">Features</a>
+    <a href="game-news.html" class="tab">Game News</a>
+    <a href="game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span class="crumb-cur">All Games</span></nav>
+<header class="hero small">
+  <h1>All Games</h1>
+  <p id="game-total">Loading 158542+ games...</p>
+  <div class="search-box">
+    <div class="combo-wrap">
+      <input id="game-search" type="text" placeholder="Search 158,542 games (e.g. GTA, Elden Ring, Stardew)..." autocomplete="off">
+      <div class="combo-list" id="game-search-combo"></div>
+    </div>
+  </div>
+  <p id="result-count" class="result-count"></p>
+  <div class="filter-bar sticky" id="filter-bar">
+    <select id="f-year"><option value="">All Years</option></select>
+    <select id="f-genre"><option value="">All Genres</option></select>
+    <select id="f-sort"><option value="">Newest</option><option value="name">Name A-Z</option><option value="year">Year</option><option value="discount">Biggest Discount</option><option value="price">Lowest Price</option></select>
+    <label class="f-check"><input type="checkbox" id="f-free"> Free</label>
+    <label class="f-check"><input type="checkbox" id="f-sale"> On Sale</label>
+    <button id="f-clear" class="f-clear">✕ Clear</button>
+  </div>
+</header>
+<section class="games full">
+  <div class="game-list" id="game-list"><p class="loading">Loading game database...</p></div>
+  <button id="load-more" class="load-more" style="display:none">Load more</button>
+</section>
+<footer class="footer">
+  <p>CanIPlay — game compatibility checker. Hardware data: PassMark. Game data: Steam.</p>
+  <p><a href="index.html">Home</a> · <a href="deals.html">Deals &amp; Free Games</a></p>
+  <div class="footer-top"><h3>Top Games</h3><ul><li><a href="game/psychopomp-gold.html">Psychopomp GOLD</a></li><li><a href="game/interdimensional-vending-machine.html">Interdimensional Vending Machine</a></li><li><a href="game/breath-of-fire-iv.html">Breath of Fire IV</a></li><li><a href="game/dino-crisis-2.html">Dino Crisis 2</a></li><li><a href="game/vanguard-galaxy.html">Vanguard Galaxy</a></li><li><a href="game/my-little-cafe-nightmare.html">My Little Cafe Nightmare</a></li><li><a href="game/glyphica-typing-survival.html">Glyphica: Typing Survival</a></li><li><a href="game/parking-garage-rally-circuit.html">Parking Garage Rally Circuit</a></li><li><a href="game/first-cut-samurai-duel.html">First Cut: Samurai Duel</a></li><li><a href="game/buddy-simulator-1984.html">Buddy Simulator 1984</a></li></ul></div>
+</footer>
+<script src="assets/app.js?v=1787418271"></script>
+</body>
+</html>

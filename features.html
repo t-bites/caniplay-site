@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Games by Feature — Single-player, Co-op, VR &amp; more | CanIPlay</title>
+<meta name="description" content="Browse the CanIPlay game library by Steam feature categories — single-player, co-op, PvP, VR support, split screen, cross-platform and more. Pick multiple features to combine filters, or exclude ones you don't want.">
+<link rel="stylesheet" href="assets/style.css?v=1787480000">
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="index.html" class="tab">Can I Play</a>
+    <a href="game-gear.html" class="tab">Game Gear</a>
+    <a href="top-games.html" class="tab">Top Games</a>
+    <a href="features.html" class="tab active">Features</a>
+    <a href="game-news.html" class="tab">Game News</a>
+    <a href="game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span class="crumb-cur">Features</span></nav>
+<header class="hero small">
+  <h1>Browse by Feature</h1>
+  <p>Click features to combine them — ✓ include what you want, ⊖ exclude what you don't, then browse the matching games.</p>
+</header>
+<section class="feat-wrap">
+  <div class="feat-sort" role="group" aria-label="Sort features">
+    <span class="feat-sort-label">Sort</span>
+    <button id="sort-az" class="feat-sort-btn on" type="button" aria-pressed="true" disabled><span class="sort-ico" aria-hidden="true">🔤</span>A–Z<span class="sort-dir" aria-hidden="true">↑</span></button>
+    <button id="sort-count" class="feat-sort-btn" type="button" aria-pressed="false" disabled><span class="sort-ico" aria-hidden="true">📊</span>Most games<span class="sort-dir" aria-hidden="true">↓</span></button>
+    <span class="feat-view" role="group" aria-label="View mode">
+      <button id="view-grid" class="feat-view-btn on" type="button" aria-pressed="true" title="Grid view" aria-label="Grid view">▦</button>
+      <button id="view-list" class="feat-view-btn" type="button" aria-pressed="false" title="List view — with games share bar" aria-label="List view">☰</button>
+    </span>
+  </div>
+  <div id="feat-grid" class="feat-grid"><p class="loading">Loading features…</p></div>
+  <div id="pickbar" class="feat-pickbar" role="status" aria-live="polite">
+    <span id="pick-info" class="pick-info"></span>
+    <a id="pick-browse" class="pick-browse" href="games.html">Browse games →</a>
+    <button id="pick-clear" class="pick-clear" type="button">Clear</button>
+  </div>
+  <p class="feat-note">Tip: pick several features (or ⊖ to exclude one) and hit <b>Browse games</b> — your selection becomes a shareable link. Counts are live from the CanIPlay game library. Feature data comes from Steam categories. <a href="games.html">Browse all games</a> instead?</p>
+</section>
+<footer class="footer">
+  <p>CanIPlay — game compatibility checker. Hardware data: PassMark. Game data: Steam.</p>
+  <p><a href="index.html">Home</a> · <a href="game-sales.html">Deals &amp; Free Games</a></p>
+</footer>
+<script>
+(function () {
+  var ICONS = {
+    'single-player': '🎮', 'achievements': '🏆', 'steam-cloud': '☁️',
+    'full-controller': '🕹️', 'multi-player': '👥', 'trading-cards': '🃏',
+    'co-op': '🤝', 'pvp': '⚔️', 'online-co-op': '🌐', 'partial-controller': '🎛️',
+    'online-pvp': '🥊', 'split-screen': '🧩', 'remote-play-together': '📡',
+    'leaderboards': '📊', 'cross-platform': '🔄', 'workshop': '🛠️',
+    'remote-play-tv': '📺', 'stats': '📈', 'level-editor': '🧱',
+    'remote-play-mobile': '📱', 'captions': '💬', 'vr-support': '🥽'
+  };
+  var esc = function (s) { return String(s).replace(/[<>&\"]/g, ''); };
+  var grid = document.getElementById('feat-grid');
+  var bar = document.getElementById('pickbar');
+  var info = document.getElementById('pick-info');
+  var browse = document.getElementById('pick-browse');
+  var clearBtn = document.getElementById('pick-clear');
+  var sortAz = document.getElementById('sort-az');
+  var sortCnt = document.getElementById('sort-count');
+  var ORDER = [];        // slug order from _index.json (stable deep-link order)
+  var LABELS = {};       // slug -> label
+  var state = {};        // slug -> null | 'inc' | 'exc'
+  var cards = {};        // slug -> card element
+  var sortMode = 'az';   // 'az' | 'count'  — 排序模式（URL ?sort= 优先，否则 localStorage，默认 az）
+
+  function syncBar() {
+    var inc = [], exc = [];
+    ORDER.forEach(function (s) {
+      if (state[s] === 'inc') inc.push(s);
+      else if (state[s] === 'exc') exc.push(s);
+    });
+    if (inc.length + exc.length === 0) {
+      bar.classList.remove('show');
+      document.body.classList.remove('picking');
+      return;
+    }
+    bar.classList.add('show');
+    document.body.classList.add('picking');
+    info.textContent = inc.length + ' selected' + (exc.length ? ' · ' + exc.length + ' excluded' : '');
+    var parts = inc.concat(exc.map(function (s) { return '-' + s; }));
+    browse.href = 'games.html?feat=' + parts.join('+');
+  }
+
+  function setState(slug, st) {
+    state[slug] = st;
+    var card = cards[slug];
+    card.classList.toggle('sel', st === 'inc');
+    card.classList.toggle('excl', st === 'exc');
+    card.setAttribute('aria-pressed', st === 'inc' ? 'true' : (st === 'exc' ? 'mixed' : 'false'));
+    var stEl = card.querySelector('.feat-state');
+    if (st === 'inc') stEl.textContent = '✓ Included';
+    else if (st === 'exc') stEl.textContent = 'Not';
+    else stEl.textContent = '';
+    syncBar();
+  }
+
+  // URL 预选：features.html?feat=single-player+-co-op（与 games.html 同语法，raw + 按规范解析为空格需还原）
+  function preselect() {
+    try {
+      var raw = new URLSearchParams(location.search).get('feat');
+      if (!raw) return;
+      raw.split(' ').join('+').split('+').forEach(function (seg) {
+        if (!seg) return;
+        var excl = seg.charAt(0) === '-';
+        var slug = excl ? seg.slice(1) : seg;
+        if (!/^[a-z0-9-]+$/.test(slug) || !(slug in LABELS)) return;
+        setState(slug, excl ? 'exc' : 'inc');
+      });
+    } catch (e) { /* 非法参数忽略 */ }
+  }
+
+  // #51 排序：az=按名称；count=按游戏数。#52 升降序：再次点击活动按钮切换方向（az ↑/↓，count ↓/↑）
+  // sortMode: 'az'|'count'；sortDir: 'asc'|'desc'（URL ?dir= 深链 + localStorage 记忆）
+  var sortDir = 'asc';   // az 默认升序
+  function applySort() {
+    if (!ORDER.length) return;
+    var dirMul = sortDir === 'desc' ? -1 : 1;
+    var sorted;
+    if (sortMode === 'count') {
+      sorted = ORDER.slice().sort(function (a, b) {
+        var c = +cards[a].getAttribute('data-cnt') || 0;
+        var d = +cards[b].getAttribute('data-cnt') || 0;
+        if (c !== d) return (c - d) * dirMul;      // 自然序=升序(c-d)；desc 时 dirMul=-1 → 降序（Most games 在前）
+        return LABELS[a].localeCompare(LABELS[b]);
+      });
+    } else {
+      sorted = ORDER.slice().sort(function (a, b) { return LABELS[a].localeCompare(LABELS[b]) * dirMul; });
+    }
+    sorted.forEach(function (s) { grid.appendChild(cards[s]); }); // appendChild 移动已有节点，监听器/状态保留
+  }
+
+  function syncDirUI() {
+    // 箭头语义：活动按钮显示当前方向；非活动按钮显示"点击后将采用的默认方向"（az=↑ / count=↓）
+    var azArrow = sortMode === 'az' ? (sortDir === 'asc' ? '↑' : '↓') : '↑';
+    var cntArrow = sortMode === 'count' ? (sortDir === 'desc' ? '↓' : '↑') : '↓';
+    sortAz.querySelector('.sort-dir').textContent = azArrow;
+    sortCnt.querySelector('.sort-dir').textContent = cntArrow;
+    sortAz.setAttribute('aria-label', 'Sort A to Z' + (sortMode === 'az' && sortDir === 'desc' ? ' reversed' : ''));
+    // #52 备注：方向控件可发现性 —— 动态 title 提示当前状态与再次点击的效果
+    var azT = sortMode === 'az'
+      ? ('Sorted A–Z ' + (sortDir === 'asc' ? 'ascending' : 'descending') + ' — click to flip')
+      : 'Sort alphabetically A–Z';
+    var cntT = sortMode === 'count'
+      ? ('Sorted by game count ' + (sortDir === 'desc' ? 'highest first' : 'lowest first') + ' — click to flip')
+      : 'Sort by most games';
+    sortAz.title = azT; sortCnt.title = cntT;
+  }
+
+  function setSort(mode, updateUrl, keepDir) {
+    if (mode !== 'az' && mode !== 'count') mode = 'az';
+    if (!keepDir) {
+      // 切换排序维度时重置为该维度的默认方向；同维度重复点击=翻转方向（#52）
+      if (mode === sortMode) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortDir = mode === 'count' ? 'desc' : 'asc';
+      }
+    }
+    sortMode = mode;
+    sortAz.classList.toggle('on', mode === 'az');
+    sortCnt.classList.toggle('on', mode === 'count');
+    sortAz.setAttribute('aria-pressed', mode === 'az' ? 'true' : 'false');
+    sortCnt.setAttribute('aria-pressed', mode === 'count' ? 'true' : 'false');
+    applySort();
+    syncDirUI();
+    try { localStorage.setItem('caniplay_feat_sort', mode); try { localStorage.setItem('caniplay_feat_dir', sortDir); } catch (e) {} } catch (e) {}
+    if (updateUrl) {
+      var p = new URLSearchParams(location.search);
+      if (mode === 'az') p.delete('sort'); else p.set('sort', mode);
+      // 方向参数：仅非默认方向写 URL（az+asc / count+desc 为默认）
+      var defaultDir = mode === 'count' ? 'desc' : 'asc';
+      if (sortDir === defaultDir) p.delete('dir'); else p.set('dir', sortDir);
+      var q = p.toString();
+      history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
+    }
+  }
+
+  fetch('assets/data/featidx/_index.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('load failed'); return r.json(); })
+    .then(function (idx) {
+      ORDER = Object.keys(idx);
+      ORDER.forEach(function (s) { LABELS[s] = idx[s].label; });
+      grid.innerHTML = '';
+      ORDER.forEach(function (s) {
+        var v = idx[s];
+        var card = document.createElement('div');
+        card.className = 'feat-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-pressed', 'false');
+        card.setAttribute('data-slug', s);
+        card.setAttribute('data-cnt', v.count || 0);
+        card.innerHTML = '<span class="feat-ico">' + (ICONS[s] || '🎲') + '</span>' +
+          '<span class="feat-name">' + esc(v.label || s) + '</span>' +
+          '<span class="feat-cnt">' + (v.count || 0).toLocaleString() + ' games</span>' +
+          '<button class="feat-ex" type="button" title="Exclude games that have ' + esc(v.label || s) + '" aria-label="Exclude ' + esc(v.label || s) + '">⊖</button>' +
+          '<span class="feat-state"></span>' +
+          '<span class="feat-bar" aria-hidden="true"><i></i></span>' +
+          '<a class="feat-go" href="games.html?feat=' + encodeURIComponent(s) + '" title="View ' + esc(v.label || s) + ' games">View →</a>';
+        card.addEventListener('click', function (ev) {
+          if (ev.target.closest('.feat-ex') || ev.target.closest('.feat-go')) return;
+          var slug = card.getAttribute('data-slug');
+          setState(slug, state[slug] === 'inc' ? null : 'inc');
+        });
+        card.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            var slug = card.getAttribute('data-slug');
+            setState(slug, state[slug] === 'inc' ? null : 'inc');
+          }
+        });
+        card.querySelector('.feat-ex').addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          var slug = card.getAttribute('data-slug');
+          setState(slug, state[slug] === 'exc' ? null : 'exc');
+        });
+        cards[s] = card;
+        grid.appendChild(card);
+      });
+      preselect();
+      // 初始排序：?sort= 参数 > localStorage > az；方向：?dir= > localStorage > 维度默认
+      var initSort = 'az';
+      var initDir = null;
+      try {
+        var sp = new URLSearchParams(location.search);
+        var sParam = sp.get('sort');
+        if (sParam === 'az' || sParam === 'count') initSort = sParam;
+        else {
+          var saved = localStorage.getItem('caniplay_feat_sort');
+          if (saved === 'az' || saved === 'count') initSort = saved;
+        }
+        var dParam = sp.get('dir');
+        if (dParam === 'asc' || dParam === 'desc') initDir = dParam;
+        else {
+          var savedDir = localStorage.getItem('caniplay_feat_dir');
+          if (savedDir === 'asc' || savedDir === 'desc') initDir = savedDir;
+        }
+      } catch (e) {}
+      sortMode = initSort;                       // 预设维度，setSort(keepDir) 才能正确保留方向
+      if (initDir) sortDir = initDir;
+      else sortDir = initSort === 'count' ? 'desc' : 'asc';
+      sortAz.disabled = false;
+      sortCnt.disabled = false;
+      setSort(initSort, false, true);            // keepDir=true：初始加载不翻转
+      // #53 占比条：count/max 相对宽度（list 视图可视化各特性规模）
+      var maxCnt = 0;
+      ORDER.forEach(function (s) { var c = +cards[s].getAttribute('data-cnt') || 0; if (c > maxCnt) maxCnt = c; });
+      ORDER.forEach(function (s) {
+        var c = +cards[s].getAttribute('data-cnt') || 0;
+        cards[s].querySelector('.feat-bar i').style.width = maxCnt ? (c / maxCnt * 100).toFixed(2) + '%' : '0%';
+      });
+      initView();
+    })
+    .catch(function () {
+      grid.innerHTML = '<p class="loading">Could not load the feature list right now. <a href="games.html">Browse all games</a> instead?</p>';
+    });
+
+  sortAz.addEventListener('click', function () { setSort('az', true); });
+  sortCnt.addEventListener('click', function () { setSort('count', true); });
+
+  // #53 视图切换 grid/list：list 行内嵌 count/max 占比条；URL ?view= 深链 + localStorage 记忆
+  var viewGrid = document.getElementById('view-grid');
+  var viewList = document.getElementById('view-list');
+  function setView(v, updateUrl) {
+    if (v !== 'grid' && v !== 'list') v = 'grid';
+    grid.classList.toggle('list', v === 'list');
+    viewGrid.classList.toggle('on', v === 'grid');
+    viewList.classList.toggle('on', v === 'list');
+    viewGrid.setAttribute('aria-pressed', v === 'grid' ? 'true' : 'false');
+    viewList.setAttribute('aria-pressed', v === 'list' ? 'true' : 'false');
+    try { localStorage.setItem('caniplay_feat_view', v); } catch (e) {}
+    if (updateUrl) {
+      var p = new URLSearchParams(location.search);
+      if (v === 'grid') p.delete('view'); else p.set('view', 'list');
+      var q = p.toString();
+      history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
+    }
+  }
+  function initView() {
+    var init = 'grid';
+    try {
+      var vp = new URLSearchParams(location.search).get('view');
+      if (vp === 'grid' || vp === 'list') init = vp;
+      else {
+        var savedV = localStorage.getItem('caniplay_feat_view');
+        if (savedV === 'grid' || savedV === 'list') init = savedV;
+      }
+    } catch (e) {}
+    setView(init, false);
+  }
+  viewGrid.addEventListener('click', function () { setView('grid', true); });
+  viewList.addEventListener('click', function () { setView('list', true); });
+
+  clearBtn.addEventListener('click', function () {
+    ORDER.forEach(function (s) { setState(s, null); });
+    history.replaceState(null, '', location.pathname);
+  });
+})();
+
+/* #56 吸顶态投影 sentinel（与 app.js 同逻辑，本页不加载 app.js） */
+(function(){
+  var el=document.querySelector('.feat-sort');
+  if(!el||!('IntersectionObserver' in window)||el.dataset.stuckWatch)return;
+  el.dataset.stuckWatch='1';
+  var sent=document.createElement('div');
+  sent.setAttribute('aria-hidden','true');
+  sent.style.cssText='position:absolute;width:1px;height:1px;margin:0;padding:0;pointer-events:none;visibility:hidden;';
+  el.parentNode.insertBefore(sent,el);
+  new IntersectionObserver(function(es){es.forEach(function(e){el.classList.toggle('stuck',!e.isIntersecting);});}).observe(sent);
+})();
+</script>
+</body>
+</html>

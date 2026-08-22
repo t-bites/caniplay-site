@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Game not found · CanIPlay</title>
+<meta name="description" content="Page not found. Search 100,000+ games and check PC compatibility on CanIPlay.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/caniplay/assets/style.css?v=404">
+<style>
+  /* 404 专用布局：动态详情渲染器（#40，8/14） */
+  .e404 { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+  .e404-search { text-align: center; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+  .e404-code { font-size: clamp(56px, 14vw, 96px); font-weight: 800; line-height: 1;
+    background: linear-gradient(135deg, var(--accent), #9b6bff); -webkit-background-clip: text;
+    background-clip: text; color: transparent; letter-spacing: 2px; }
+  .e404 h1 { font-size: 1.4rem; margin: 10px 0; }
+  .e404 p.desc { color: var(--muted); max-width: 480px; margin: 0 auto 20px; }
+  .e404-form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto; }
+  .e404-form input { flex: 1; min-height: 46px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); padding: 0 14px; font-size: .95rem; }
+  .e404-form input:focus { outline: none; border-color: var(--accent); }
+  .e404-form button { min-height: 46px; padding: 0 18px; border-radius: 10px; border: 0;
+    background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; }
+  .e404-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px; }
+  .e404-links a { min-height: 40px; display: inline-flex; align-items: center; padding: 6px 14px;
+    border-radius: 20px; background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: .85rem; }
+  .e404-links a:hover { border-color: var(--accent); color: var(--accent); }
+  /* 动态渲染的详情页 */
+  .dyn-game { margin-top: 8px; }
+  .dyn-game .dyn-head { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; }
+  .dyn-game .dyn-head img { width: 240px; border-radius: 10px; border: 1px solid var(--border); }
+  .dyn-game .dyn-head h1 { font-size: 1.6rem; margin: 0 0 8px; }
+  .dyn-game .dyn-meta { color: var(--muted); font-size: .9rem; margin-bottom: 6px; }
+  .dyn-game .dyn-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .dyn-game .dyn-specs .col { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .dyn-game .dyn-specs h3 { font-size: .95rem; margin: 0 0 10px; color: var(--accent); }
+  .dyn-game .dyn-specs td { padding: 4px 0; font-size: .85rem; vertical-align: top; }
+  .dyn-game .dyn-specs td:first-child { color: var(--muted); padding-right: 12px; white-space: nowrap; }
+  .dyn-price { display: inline-block; background: var(--accent); color: #fff; padding: 4px 14px;
+    border-radius: 20px; font-weight: 600; font-size: .9rem; }
+  .dyn-price.free { background: var(--green, #10b981); }
+  .dyn-sale { background: #e11d48; color: #fff; padding: 3px 10px; border-radius: 8px;
+    font-size: .8rem; font-weight: 700; margin-left: 8px; }
+  @media (max-width: 700px) {
+    .dyn-game .dyn-head { flex-direction: column; }
+    .dyn-game .dyn-head img { width: 100%; }
+    .dyn-game .dyn-specs { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="/caniplay/">🎮 CanIPlay</a>
+  <span class="nav-tabs">
+    <a href="/caniplay/" class="tab">Can I Play</a>
+    <a href="/caniplay/game-gear.html" class="tab">Game Gear</a>
+    <a href="/caniplay/top-games.html" class="tab">Top Games</a>
+    <a href="/caniplay/features.html" class="tab">Features</a>
+    <a href="/caniplay/game-news.html" class="tab">Game News</a>
+    <a href="/caniplay/game-sales.html" class="tab">Game Sales</a>
+  </span>
+</nav>
+<div class="e404" id="e404-root">
+  <div class="e404-search" id="e404-search">
+    <div class="e404-code">404</div>
+    <h1 id="e404-title">Game not found</h1>
+    <p class="desc" id="e404-desc">This page doesn't exist — the link may be outdated. Trying to load it dynamically...</p>
+    <form class="e404-form" action="/caniplay/games.html" method="get" role="search">
+      <input id="e404-q" type="search" name="q" placeholder="Search 100,000+ games..." autocomplete="off" aria-label="Search games">
+      <button type="submit">Search</button>
+    </form>
+    <div class="e404-links">
+      <a href="/caniplay/games.html">🗂 All Games</a>
+      <a href="/caniplay/top-games.html">🏆 Top Games</a>
+      <a href="/caniplay/game-sales.html">🎁 Deals &amp; Free</a>
+      <a href="/caniplay/game-gear.html">🛒 Game Gear</a>
+    </div>
+  </div>
+  <div class="dyn-game" id="dyn-game" style="display:none"></div>
+</div>
+<script>
+// ===== 长尾游戏动态渲染（#40）：URL slug → 分片查详情 → 渲染完整页 =====
+(function () {
+  var root = document.getElementById('e404-root');
+  var searchBox = document.getElementById('e404-search');
+  var dynBox = document.getElementById('dyn-game');
+  var m = (location.pathname.match(/\/([\w-]+)\.html$/) || [])[1];
+  if (!m) { return; }
+  var slug = decodeURIComponent(m).toLowerCase();
+  if (!slug || slug.length > 80) { return; }
+  // 预填搜索框（找不到时兜底）
+  var q = document.getElementById('e404-q');
+  if (q) q.value = slug.replace(/[-_]+/g, ' ');
+
+  // 首字母 → 分片
+  var first = slug[0];
+  if (!/[a-z0-9]/.test(first)) first = '0';
+  var shardUrl = '/caniplay/assets/data/lt_' + first + '.json';
+  fetch(shardUrl, { cache: 'force-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (list) {
+      if (!list) throw new Error('no shard');
+      var g = null;
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].u === slug) { g = list[i]; break; }
+      }
+      if (!g) throw new Error('not in shard');
+      render(g);
+    })
+    .catch(function () {
+      // 找不到 → 保留 404 搜索页
+      document.getElementById('e404-title').textContent = 'Game not found';
+      document.getElementById('e404-desc').textContent = 'We couldn\'t find this game in our database. Try searching instead:';
+    });
+
+  function render(g) {
+    document.title = g.n + ' — Can I play it on my PC? | CanIPlay';
+    searchBox.style.display = 'none';
+    dynBox.style.display = 'block';
+    var price = '';
+    if (g.f) price = '<span class="dyn-price free">Free</span>';
+    else if (g.p > 0) {
+      var orig = g.di > 0 ? Math.round(g.p / (1 - g.di / 100)) : g.p;
+      price = '<span class="dyn-price">$' + (g.p / 100).toFixed(2) + '</span>' +
+        (g.di > 0 ? '<span class="dyn-sale">-' + g.di + '%</span>' : '');
+    }
+    var fmt = function (v) { return v ? v.replace(/</g, '&lt;') : '—'; };
+    dynBox.innerHTML =
+      '<div class="dyn-head">' +
+        (g.i ? '<img src="' + g.i + '" alt="' + g.n.replace(/</g, '&lt;') + '" loading="lazy">' : '') +
+        '<div><h1>' + g.n.replace(/</g, '&lt;') + '</h1>' +
+        '<div class="dyn-meta">' + (g.y ? g.y + ' · ' : '') + price + '</div>' +
+        '<div class="dyn-meta">⚠️ 此游戏在动态模式加载 — 硬件需求为近似值</div>' +
+        '</div></div>' +
+      '<div class="dyn-specs">' +
+        '<div class="col"><h3>Minimum Requirements</h3><table>' +
+          '<tr><td>GPU</td><td>' + fmt(g.mg) + '</td></tr>' +
+          '<tr><td>CPU</td><td>' + fmt(g.mc) + '</td></tr>' +
+          '<tr><td>RAM</td><td>' + fmt(g.mm) + '</td></tr>' +
+        '</table></div>' +
+        '<div class="col"><h3>Recommended</h3><table>' +
+          '<tr><td>GPU</td><td>' + fmt(g.rg) + '</td></tr>' +
+          '<tr><td>CPU</td><td>' + fmt(g.rc) + '</td></tr>' +
+          '<tr><td>RAM</td><td>' + fmt(g.rm) + '</td></tr>' +
+        '</table></div>' +
+      '</div>';
+  }
+})();
+</script>
+</body>
+</html>
